@@ -9,11 +9,9 @@ export default function Offers() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Search (debounced)
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  // Apply Offer modal
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [discount, setDiscount] = useState(""); // percentage
@@ -21,16 +19,10 @@ export default function Offers() {
   const [modalLoading, setModalLoading] = useState(false); // loading single product
   const [modalApplying, setModalApplying] = useState(false); // applying offer
 
-  // Add Offer modal + upload
   const [addOfferModalOpen, setAddOfferModalOpen] = useState(false);
   const [offerImage, setOfferImage] = useState(null);
   const [uploading, setUploading] = useState(false);
 
-  // Helper: normalize image source:
-  // - if it's a 24-hex string (Mongo ObjectId) treat as GridFS id
-  // - if starts with http(s) use as-is
-  // - if starts with '/' treat as backend-relative
-  // - otherwise prefix with API_BASE
   const normalizeImage = (img) => {
     if (!img) return null;
     if (typeof img === "string" && /^[a-f\d]{24}$/i.test(img)) {
