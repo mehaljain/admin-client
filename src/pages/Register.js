@@ -36,7 +36,7 @@ export default function Register() {
       return;
     }
     try {
-      const res = await axios.post("http://localhost:5000/api/admin/register", {
+      const res = await axios.post("https://hs-project-server.onrender.com/api/admin/register", {
         name: form.name,
         email: form.email,
         password: form.password

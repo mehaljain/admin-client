@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 export default function Offers() {
-  const API_BASE = "http://localhost:5000";
+  const API_BASE = "https://hs-project-server.onrender.com";
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);

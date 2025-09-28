@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Footer from "../components/Footer";
 
 export default function Products() {
-  const API_BASE = "http://localhost:5000";
+  const API_BASE = "https://hs-project-server.onrender.com";
 
   const [view, setView] = useState(null); // 'haircare' or 'skincare'
   const [products, setProducts] = useState([]);

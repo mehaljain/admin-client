@@ -24,13 +24,15 @@ export default function AdminDashboard() {
               <span className="mt-2 text-sm text-black">Offers</span>
             </a>
           </div>
+
           {/* Main Dashboard Content */}
           <div className="bg-white w-full flex-1 flex flex-col justify-center items-center rounded-r-xl shadow-lg p-8">
-            <h1 className="text-3xl font-heading text-primary-dark mb-8 text-center">Admin Dashboard</h1>
-            <div className="flex flex-col gap-6">
-              <a href="/products" className="bg-primary-dark text-white px-6 py-3 rounded text-lg font-bold hover:bg-primary transition text-center">Manage Products</a>
-              <a href="/offers" className="bg-primary-dark text-white px-6 py-3 rounded text-lg font-bold hover:bg-primary transition text-center">Manage Offers</a>
-            </div>
+            <h1 className="text-3xl font-heading text-primary-dark mb-4 text-center">
+              Welcome to the Admin Panel
+            </h1>
+            <p className="text-gray-600 text-center">
+              Use the navigation above to manage products and offers.
+            </p>
           </div>
         </div>
       </div>
