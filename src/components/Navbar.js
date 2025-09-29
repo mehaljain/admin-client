@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const RegisterIcon = () => (
   <svg
@@ -29,33 +30,33 @@ export default function Navbar() {
 
       {/* Navigation Links */}
       <div className="flex gap-6">
-        <a
-          href="/dashboard"
+        <Link
+          to="/dashboard"
           className="text-gray-700 font-medium hover:text-primary-dark"
         >
           Dashboard
-        </a>
-        <a
-          href="/products"
+        </Link>
+        <Link
+          to="/products"
           className="text-gray-700 font-medium hover:text-primary-dark"
         >
           Manage Products
-        </a>
-        <a
-          href="/offers"
+        </Link>
+        <Link
+          to="/offers"
           className="text-gray-700 font-medium hover:text-primary-dark"
         >
           Manage Offers
-        </a>
+        </Link>
       </div>
 
       {/* Register Button */}
-      <a
-        href="/register"
+      <Link
+        to="/register"
         className="ml-6 flex items-center justify-center text-gray-600 hover:text-primary-dark"
       >
         <RegisterIcon />
-      </a>
+      </Link>
     </nav>
   );
 }
