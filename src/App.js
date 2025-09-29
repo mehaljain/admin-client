@@ -14,10 +14,10 @@ function App() {
         
         <Routes>
           <Route path="/" element={<AdminLogin />} />
-          <Route path="/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-          <Route path="/products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
-          <Route path="/offers" element={<ProtectedRoute><Offers /></ProtectedRoute>} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<AdminDashboard />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/offers" element={<Offers />} />
+        <Route path="/register" element={<Register />} />
         </Routes>
       </div>
     </Router>

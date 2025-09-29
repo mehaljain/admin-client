@@ -10,7 +10,7 @@ export default function AdminDashboard() {
           {/* Sidebar */}
           <div className="flex flex-col items-center justify-center bg-gray-100 rounded-l-xl shadow-lg p-8 w-32">
             <a href="/products" className="mb-8 flex flex-col items-center group">
-              {/* Product Icon */}
+              {/* Product Icon */}  
               <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-primary-dark group-hover:text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7l9-4 9 4-9 4-9-4zm0 2v6a2 2 0 002 2h3v-4h4v4h3a2 2 0 002-2V9" />
               </svg>

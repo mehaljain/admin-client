@@ -21,9 +21,7 @@ export default function Products() {
     hairType: "",
     concern: ""
   });
-
-  // imageList holds mixed items for ordering in modal:
-  // { type: 'existing', id: '68abc...' } or { type: 'new', file: File, preview: 'blob:url' }
+  
   const [imageList, setImageList] = useState([]);
 
   const [selectedFiles, setSelectedFiles] = useState([]); // for file input (not used directly for ordering)
@@ -47,7 +45,6 @@ export default function Products() {
     }
   };
 
-  // --- Helpers for imageList manipulation ---
   const addNewFilesToImageList = (files) => {
     const newItems = Array.from(files).map(file => ({
       type: 'new',
@@ -73,7 +70,6 @@ export default function Products() {
     setImageList(prev => {
       const arr = [...prev];
       const removed = arr.splice(index, 1)[0];
-      // revoke objectURL for new files
       if (removed && removed.type === 'new' && removed.preview) {
         URL.revokeObjectURL(removed.preview);
       }
@@ -85,17 +81,14 @@ export default function Products() {
     const files = e.target.files;
     if (!files || files.length === 0) return;
     addNewFilesToImageList(files);
-    // keep selectedFiles for compatibility, but not strictly needed
     setSelectedFiles(prev => [...prev, ...Array.from(files)]);
   };
 
-  // --- Form field change handler (non-image) ---
   const handleChange = e => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
 
-  // --- Open edit modal prefill imageList with existing image ids ---
   const handleEdit = product => {
     setEditId(product._id);
     setForm({
@@ -110,7 +103,6 @@ export default function Products() {
       skinConcern: (product.skinConcern || []).join(", ")
     });
 
-    // Build imageList from existing images: product.images holds ids or urls
     const existingItems = (product.images || []).map(img => {
       if (typeof img === 'string' && /^[a-f\d]{24}$/i.test(img)) return { type: 'existing', id: img };
       return { type: 'existing', id: img };
@@ -129,31 +121,25 @@ export default function Products() {
   setModalOpen(true);
   };
 
-  // --- Submit handler: upload new files in the order they appear, merge IDs according to imageList order ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
     try {
-      // 1) prepare list of new files in the order they appear in imageList
       const newFileItems = imageList.filter(item => item.type === 'new');
       let uploadedIds = [];
 
       if (newFileItems.length > 0) {
         const formData = new FormData();
-        // append in the same order as imageList to preserve order
         newFileItems.forEach((it) => {
           formData.append('images', it.file);
         });
 
-        // call upload endpoint - expecting { files: [{ id: '...', filename: '...' }, ...] } or similar
         const uploadRes = await axios.post(`${API_BASE}/api/upload`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
 
-        // normalize response: handle different shapes gracefully
-        // prefer uploadRes.data.files array of objects with id, otherwise uploadRes.data.fileId or uploadRes.data.ids
         if (uploadRes.data) {
           if (Array.isArray(uploadRes.data.files)) {
             uploadedIds = uploadRes.data.files.map(f => f.id || f.fileId || f._id || f._id?.toString());
@@ -164,17 +150,12 @@ export default function Products() {
           } else if (uploadRes.data.files && typeof uploadRes.data.files === 'string') {
             uploadedIds = [uploadRes.data.files];
           } else {
-            // fallback: if server returns file objects directly
-            // try to extract any id-like prop from uploadRes.data
-            // (if you know exact response format, adjust above)
+            
             console.warn('Unknown upload response format', uploadRes.data);
           }
         }
 
-        // If server didn't return ids correctly, throw
         if (uploadedIds.length !== newFileItems.length) {
-          // Try a common alternative: some servers return files: [{ id: '...' }] or files: ['id1','id2']
-          // If lengths mismatch, continue cautiously but try to map new files in sequence by trusting returned order
           if (uploadedIds.length === 0) {
             throw new Error('Upload did not return file ids in expected format.');
           }
